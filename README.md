@@ -1,102 +1,96 @@
-# AudioEnhancer
-🗣️ AudioEnhancer — AI Voice-Over & Video Enhancement Tool
-🎬 Overview
+# 🗣️ AudioEnhancer — AI Voice-Over & Video Enhancement Tool
 
-AudioEnhancer is an AI-powered tool that automatically:
+## 🎬 Overview
+**AudioEnhancer** is an AI-powered system that automates:
+- Generating **voiceovers** using cloned or reference voices  
+- Creating and aligning **subtitles** automatically  
+- Enhancing and synchronizing **audio and video** using FFmpeg  
+- Optionally integrating with **AWS**, **Deepgram**, and **Gemini AI** for speech and text processing  
 
-Generates voiceovers using cloned or custom voices,
+This project can run **fully offline on your local machine**, or optionally connect to the cloud for extended capabilities.
 
-Adds subtitles and aligns them perfectly with video content,
+---
 
-Enhances the audio quality and synchronizes speech using FFmpeg,
+## 💻 Run Locally — No Cloud Required
 
-Integrates with Google Sheets for tracking and AWS Polly / Deepgram / Gemini / S3Gen voice models for text-to-speech and transcription.
+### ✅ Local Mode Highlights
+- Works entirely on your computer — no API keys or internet needed  
+- Uses **local TTS (voice cloning)** and **FFmpeg** for processing  
+- Ideal for testing, development, or private offline workflows  
 
-This project helps automate multilingual video dubbing and content creation at scale.
+Just clone, set up dependencies, and run.  
 
-🚀 Features
+---
 
-🎤 Voice Cloning: Generate natural-sounding voiceovers in multiple languages (supports English, German, Spanish, etc.)
+## ☁️ Optional Cloud Mode
 
-🧠 AI-Powered Syncing: Auto-aligns subtitles with speech using timestamps
+If you want more power — like high-quality transcription, Gemini text refinement, or S3 storage — you can enable:
+- **AWS S3 / Polly** for TTS and storage  
+- **Deepgram** for transcription  
+- **Google Sheets API** for cloud-based tracking  
 
-🔊 Audio Enhancement: Uses FFmpeg for clear, noise-free mixing
+Simply set up your `.env` (instructions below).
 
-🪄 Cloud Integration: AWS Polly for TTS, Deepgram for STT, Google Sheets for data automation
+---
 
-💬 Multilingual Support: Detects and converts speech from different languages
+## 🚀 Features
+- 🎤 **Voice Cloning:** Generate natural speech using your own or reference voices  
+- 🧠 **AI Text Refinement:** Optionally uses Gemini AI to clean up transcripts  
+- 🔊 **Audio Enhancement:** Auto-syncs audio with video and adds subtitles  
+- 💬 **Multilingual Support:** Works with English, German, Spanish, and more  
+- ⚙️ **Two Modes:** Run **locally** or **via AWS/Deepgram** with environment setup  
+- 📊 **Google Sheets Sync (Optional):** Automatically logs timings and updates sheets  
 
-⚡ Batch Processing: Supports multiple videos and updates progress automatically
+---
 
-🧩 Project Structure
+## 🧩 Project Structure
 AudioEnhancer/
 │
-├── main.py                   # Main FastAPI backend
-├── requirements.txt           # Python dependencies
+├── main.py # Main FastAPI app for processing
+├── requirements.txt # Dependencies
 ├── Data/
-│   ├── tmp/                   # Temporary files (auto-generated)
-│   ├── Original_videos/       # Uploaded input videos
-│   └── Final_videos/          # Processed output videos
-├── voice_clone/               # Custom voice cloning module
-│   └── src/chatterbox/        # Voice model implementations
+│ ├── tmp/ # Temporary files (auto-generated)
+│ ├── Original_videos/ # Input videos
+│ └── Final_videos/ # Final outputs
+├── voice_clone/ # Voice cloning logic
+│ └── src/chatterbox/ # Internal TTS and voice modules
 └── .gitignore
 
-⚙️ Installation
 
-Clone the repository:
+---
 
+## ⚙️ Installation
+
+### 1️⃣ Clone this repo
+```bash
 git clone https://github.com/nadeemshabir/AudioEnhancer.git
 cd AudioEnhancer
-
-
-Create a virtual environment:
-
+```
+###2️⃣ Create and activate virtual environment
+```
 python -m venv venv
-venv\Scripts\activate
-
-
-Install dependencies:
-
+venv\Scripts\activate     # Windows
+# source venv/bin/activate   # Mac/Linux
+```
+###3️⃣ Install dependencies
+```
 pip install -r requirements.txt
+```
+🧩 Configuration
+▶️ To run locally (default mode)
 
+No cloud keys are needed.
+The app will use your local:
 
-Set up your environment variables:
+Voice cloning models from voice_clone/
 
-AWS_ACCESS_KEY_ID=your_key
-AWS_SECRET_ACCESS_KEY=your_secret
-DEEPGRAM_API_KEY=your_key
-GOOGLE_APPLICATION_CREDENTIALS=service_account.json
+FFmpeg for audio/video handling
 
-▶️ Usage
+Ref voice from Ref_voice/
 
-Run the FastAPI server:
+Just make sure you have:
 
-python main.py
+FFmpeg installed and added to PATH
 
+A reference voice file in Ref_voice/Anshul_Ref_Voice_trimmed.wav
 
-Upload videos through the frontend or API endpoint:
-
-POST /process-video
-
-
-Monitor progress logs in the console.
-Final videos with AI-generated voiceovers will appear in:
-
-Data/Final_videos/
-
-🧠 Technologies Used
-Type	Tools
-Backend	FastAPI, Uvicorn
-AI Models	AWS Polly, Deepgram, Gemini, S3Gen Voice Cloner
-Video Processing	FFmpeg
-Data	Google Sheets API
-Environment	Python 3.11+
-🧾 Example Workflow
-
-Upload reference voice (can be in any language)
-
-Upload video for enhancement
-
-The system clones tone/style, transcribes, generates subtitles, and syncs the final video
-
-The output video is saved with aligned voice + captions
